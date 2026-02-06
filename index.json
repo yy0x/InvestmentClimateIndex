@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-02-06T18:30:21.552Z",
+  "updatedAt": "2026-02-06T19:29:26.176Z",
   "score": 49,
   "label": null,
   "change24h": 0,
   "markets": {
     "btc": {
-      "price": 69447,
-      "marketCap": 1388623744120.5276
+      "price": 70248,
+      "marketCap": 1400839537422.9585
     },
     "gold": {
-      "price": 4951.700195,
-      "marketCap": 34429573600486.25,
+      "price": 4961,
+      "marketCap": 34494235899920.49,
       "marketCapEstimate": true
     },
     "sp500": {
-      "price": 6911.5,
+      "price": 6916.55,
       "marketCap": null,
       "marketCapProxy": "SPY"
     }
   },
   "dca": {
-    "stocks": 48,
+    "stocks": 49,
     "crypto": 57
   },
   "categories": [
@@ -38,20 +38,20 @@
     },
     {
       "name": "Stock Markets",
-      "score": 50,
-      "change": 0,
-      "summary": "Stocks are rebounding Friday, but this week’s tech rout echoes lessons from the dot-com bubble"
+      "score": 48,
+      "change": -0.2,
+      "summary": "Ominous ‘Hindenburg Omen’ spotted in U.S. stock market. It could signal more pain ahead for investors."
     },
     {
       "name": "Crypto",
       "score": 48,
       "change": -0.2,
-      "summary": "Amazon’s stock drops as investors question whether $200 billion can buy an AI edge"
+      "summary": "I settled my father’s estate, but found a will deeding a mobile home to his stepson. Am I ethically and legally obliged to fix this?"
     },
     {
       "name": "Political",
-      "score": 49,
-      "change": -0.1,
+      "score": 51,
+      "change": 0.1,
       "summary": "Nvidia’s stock shoots toward best day since April as tech sector rebounds"
     }
   ],
@@ -64,12 +64,16 @@
   "dcaHistory": [
     {
       "date": "2026-02-06",
-      "stocks": 48,
+      "stocks": 49,
       "crypto": 57
     }
   ],
   "drivers": {
     "positive": [
+      {
+        "title": "California job losses slow in January as cuts surge nationwide - Yahoo Finance",
+        "url": "https://finance.yahoo.com/news/california-job-losses-slow-january-123000528.html"
+      },
       {
         "title": "Why Alphabet’s stock is falling despite booming cloud growth",
         "url": "https://www.marketwatch.com/story/why-alphabets-stock-is-falling-despite-booming-cloud-growth-2ec59941"
@@ -77,29 +81,25 @@
       {
         "title": "Boeing to cut around 300 defence division supply chain jobs",
         "url": "https://www.bloomberg.com/news/articles/2026-02-04/boeing-to-cut-around-300-defense-division-supply-chain-jobs"
-      },
-      {
-        "title": "E.l.f. Beauty stock soars 15% on big earnings beat, raised guidance",
-        "url": "https://www.cnbc.com/2026/02/04/elf-beauty-elf-q3-2026.html"
       }
     ],
     "negative": [
       {
+        "title": "Asian Stocks to Fall as Tech-Led Drop Gains Pace: Markets Wrap - Bloomberg.com",
+        "url": "https://www.bloomberg.com/news/articles/2026-02-04/asian-stocks-to-fall-as-tech-led-drop-gains-pace-markets-wrap"
+      },
+      {
+        "title": "Stock Market Today: Dow Drops 400 Points; Nasdaq Continues Fall as Tech Selloff Persist — Live Updates - The Wall Street Journal",
+        "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-02-05-2026"
+      },
+      {
         "title": "Qualcomm’s stock falls as memory constraints hit outlook",
         "url": "https://www.marketwatch.com/story/qualcomms-stock-falls-as-memory-constraints-hit-outlook-844badba"
-      },
-      {
-        "title": "Silver falls as much as 13% as the volatility continues in metals",
-        "url": "https://www.marketwatch.com/story/silver-falls-as-much-as-13-as-the-volatility-continues-in-metals-c5285ba7"
-      },
-      {
-        "title": "Corporate DEI index sees 65% drop in participation from Fortune 500 companies",
-        "url": "https://www.cnbc.com/2026/02/04/corporate-dei-index-hrc.html"
       }
     ]
   },
   "stats": {
-    "articlesAnalyzed": 122,
+    "articlesAnalyzed": 127,
     "dataSources": 3,
     "dataQuality": 95,
     "updateFrequency": "1h"
