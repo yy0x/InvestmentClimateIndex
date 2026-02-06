@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-02-06T15:39:14.221Z",
+  "updatedAt": "2026-02-06T15:57:45.231Z",
   "score": 49,
   "label": null,
   "change24h": 0,
   "markets": {
     "btc": {
-      "price": 68401,
-      "marketCap": 1367166577972.3281
+      "price": 68513,
+      "marketCap": 1367210547045.2402
     },
     "gold": {
       "price": null,
@@ -14,7 +14,7 @@
       "marketCapEstimate": true
     },
     "sp500": {
-      "price": 686,
+      "price": 685.33,
       "marketCap": null,
       "marketCapProxy": "SPY"
     }
