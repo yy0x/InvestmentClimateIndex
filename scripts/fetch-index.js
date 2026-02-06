@@ -190,8 +190,8 @@ const fetchGoldMarket = async () => {
   if (!CONFIG.goldApiKey) {
     return { price: null, marketCap: null, marketCapEstimate: true };
   }
-  const url = 'https://www.goldapi.io/api/XAU/USD';
-  const data = await fetchJson(url, { 'x-access-token': CONFIG.goldApiKey });
+  const url = `https://app.goldapi.net/price/XAU/USD?x-api-key=${CONFIG.goldApiKey}`;
+  const data = await fetchJson(url);
   return {
     price: data.price || null,
     marketCap: 12000000000000,
