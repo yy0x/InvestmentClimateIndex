@@ -13,7 +13,6 @@
             box-sizing: border-box;
         }
 
-        
         :root {
             --bg: #0a0a0a;
             --bg-elevated: #111111;
@@ -438,6 +437,7 @@
                 </div>
             </div>
             <div id="timestamp" class="date">--</div>
+            <div id="lastUpdated" class="date" style="margin-top: 2px;">Last updated: --</div>
         </header>
 
         <!-- Top Stats -->
@@ -462,6 +462,11 @@
 
         <section class="markets">
             <div class="section-header" style="margin-bottom: 12px;">Live Markets</div>
+            <div class="market-row" style="padding-top: 0; color: var(--text-muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em;">
+                <div class="market-label">Asset</div>
+                <div class="market-value">Price</div>
+                <div class="market-value">MCap</div>
+            </div>
             <div class="market-row">
                 <div class="market-label">BTC</div>
                 <div id="btcPrice" class="market-value">--</div>
@@ -512,6 +517,20 @@
             </div>
         </section>
 
+        <!-- Methodology -->
+        <section class="historical">
+            <div class="section-header">Methodology</div>
+            <div class="category-detail">
+                Sources are clustered into macro, micro, stocks, crypto, and political buckets. Each article is scored for sentiment and relevance.
+            </div>
+            <div class="category-detail">
+                Category scores roll up into the Market Climate. DCA Readiness blends macro, political, and asset‑specific signals to reflect long‑term buy conditions.
+            </div>
+            <div class="category-detail">
+                Scores are normalized to 0–100 and updated hourly. Market caps for S&amp;P 500 use the SPY ETF as a proxy.
+            </div>
+        </section>
+
         <!-- DCA Investor View -->
         <section class="dca-section">
             <div class="section-header">DCA Readiness</div>
@@ -525,7 +544,7 @@
                 <span>Not Favorable</span>
                 <span>Favorable</span>
             </div>
-            <div id="dcaInvestmentIndicator" class="dca-meta">DCA Investments — --</div>
+            <div id="dcaInvestmentIndicator" class="dca-meta">DCA Readiness — --</div>
             <div class="dca-badges">
                 <span>DCA Stocks: <strong id="dcaStocks">--</strong></span>
                 <span>DCA Crypto: <strong id="dcaCrypto">--</strong></span>
@@ -621,7 +640,7 @@
                 display = num / 1e6;
                 suffix = 'M';
             }
-            const formatted = `${display.toFixed(2)}${suffix}`;
+            const formatted = `$${display.toFixed(2)}${suffix}`;
             return note ? `${formatted} ${note}` : formatted;
         };
 
@@ -634,6 +653,8 @@
             timestamp.textContent = `${formatUtc(data.updatedAt)} · ${mins} min ago`;
             liveStatus.textContent = isStale ? 'Stale' : 'Live';
             liveDot.style.background = isStale ? '#f87171' : 'var(--text-secondary)';
+            const lastUpdated = document.getElementById('lastUpdated');
+            if (lastUpdated) lastUpdated.textContent = `Last updated: ${formatUtc(data.updatedAt)}`;
         };
 
         const renderRegular = (data) => {
@@ -650,7 +671,7 @@
             document.getElementById('dcaOverall').textContent = avg;
             document.getElementById('dcaLabel').textContent = bandIndex(avg).label;
             document.getElementById('dcaBar').innerHTML = makeAsciiBar(avg);
-            document.getElementById('dcaInvestmentIndicator').textContent = `DCA Investments — ${avg >= 55 ? 'Favorable' : 'Not Favorable'}`;
+            document.getElementById('dcaInvestmentIndicator').textContent = `DCA Readiness — ${avg >= 55 ? 'Favorable' : 'Not Favorable'}`;
             document.getElementById('dcaStocks').textContent = stocks || '--';
             document.getElementById('dcaCrypto').textContent = crypto || '--';
         };
@@ -742,7 +763,7 @@
             renderStats(data);
         };
 
-        fetch('index.json')
+        const fetchData = () => fetch('index.json')
             .then((res) => res.json())
             .then(renderAll)
             .catch(() => {
@@ -751,6 +772,9 @@
                     .then(renderAll)
                     .catch(() => {});
             });
+
+        fetchData();
+        setInterval(fetchData, 15000);
     </script>
 </body>
 </html>
