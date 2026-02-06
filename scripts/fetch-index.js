@@ -186,12 +186,14 @@ const fetchBtcMarket = async () => {
   };
 };
 
+const GOLD_MARKET_CAP_EST = 34500000000000;
+
 const fetchGoldMarket = async () => {
   const url = 'https://api.gold-api.com/price/XAU';
   const data = await fetchJson(url);
   return {
     price: data.price || null,
-    marketCap: 12000000000000,
+    marketCap: GOLD_MARKET_CAP_EST,
     marketCapEstimate: true
   };
 };
@@ -206,6 +208,19 @@ const fetchSp500Market = async () => {
     spxPrice = spx.c || null;
   } catch (err) {
     spxPrice = null;
+  }
+  if (!spxPrice) {
+    try {
+      const csv = await fetch(`https://stooq.com/q/l/?s=^spx&f=sd2t2ohlcv&h&e=csv`).then((res) => res.text());
+      const lines = csv.trim().split('\n');
+      if (lines.length >= 2) {
+        const parts = lines[1].split(',');
+        const close = Number(parts[6]);
+        spxPrice = Number.isFinite(close) ? close : null;
+      }
+    } catch (err) {
+      spxPrice = null;
+    }
   }
   let spyPrice = null;
   let spyMarketCap = null;
