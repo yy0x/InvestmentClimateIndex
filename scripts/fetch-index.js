@@ -25,6 +25,7 @@ const CONFIG = {
   cryptoPanicKey: env.CRYPTOPANIC_API_KEY,
   finnhubKey: env.FINNHUB_API_KEY,
   newsApiKey: env.NEWSAPI_KEY,
+  goldApiKey: env.GOLD_API_KEY,
   updateFrequency: env.UPDATE_FREQUENCY || '1h',
   weights: {
     macro: Number(env.WEIGHT_MACRO || 0.2),
@@ -175,6 +176,61 @@ const fetchNewsApi = async () => {
   }));
 };
 
+const fetchBtcMarket = async () => {
+  const url = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_market_cap=true';
+  const data = await fetchJson(url);
+  const btc = data.bitcoin || {};
+  return {
+    price: btc.usd || null,
+    marketCap: btc.usd_market_cap || null
+  };
+};
+
+const fetchGoldMarket = async () => {
+  if (!CONFIG.goldApiKey) {
+    return { price: null, marketCap: null, marketCapEstimate: true };
+  }
+  const url = 'https://www.goldapi.io/api/XAU/USD';
+  const data = await fetchJson(url, { 'x-access-token': CONFIG.goldApiKey });
+  return {
+    price: data.price || null,
+    marketCap: 12000000000000,
+    marketCapEstimate: true
+  };
+};
+
+const fetchSp500Market = async () => {
+  if (!CONFIG.finnhubKey) {
+    return { price: null, marketCap: null, marketCapProxy: 'SPY' };
+  }
+  let spxPrice = null;
+  try {
+    const spx = await fetchJson(`https://finnhub.io/api/v1/quote?symbol=%5EGSPC&token=${CONFIG.finnhubKey}`);
+    spxPrice = spx.c || null;
+  } catch (err) {
+    spxPrice = null;
+  }
+  let spyPrice = null;
+  let spyMarketCap = null;
+  try {
+    const spyQuote = await fetchJson(`https://finnhub.io/api/v1/quote?symbol=SPY&token=${CONFIG.finnhubKey}`);
+    spyPrice = spyQuote.c || null;
+  } catch (err) {
+    spyPrice = null;
+  }
+  try {
+    const profile = await fetchJson(`https://finnhub.io/api/v1/stock/profile2?symbol=SPY&token=${CONFIG.finnhubKey}`);
+    spyMarketCap = profile.marketCapitalization ? profile.marketCapitalization * 1e6 : null;
+  } catch (err) {
+    spyMarketCap = null;
+  }
+  return {
+    price: spxPrice || spyPrice,
+    marketCap: spyMarketCap,
+    marketCapProxy: 'SPY'
+  };
+};
+
 const normalize = (items) => {
   const seen = new Set();
   return items.filter((item) => {
@@ -279,10 +335,13 @@ const updateDcaHistory = (history, dca) => {
 };
 
 const main = async () => {
-  const [crypto, finnhub, news] = await Promise.all([
+  const [crypto, finnhub, news, btc, gold, sp500] = await Promise.all([
     fetchCryptoPanic().catch(() => []),
     fetchFinnhub().catch(() => []),
-    fetchNewsApi().catch(() => [])
+    fetchNewsApi().catch(() => []),
+    fetchBtcMarket().catch(() => ({ price: null, marketCap: null })),
+    fetchGoldMarket().catch(() => ({ price: null, marketCap: null, marketCapEstimate: true })),
+    fetchSp500Market().catch(() => ({ price: null, marketCap: null, marketCapProxy: 'SPY' }))
   ]);
 
   const items = normalize([...crypto, ...finnhub, ...news]);
@@ -301,6 +360,11 @@ const main = async () => {
     score: sentimentScore,
     label: existing.label || null,
     change24h: existing.score ? sentimentScore - existing.score : 0,
+    markets: {
+      btc,
+      gold,
+      sp500
+    },
     dca,
     categories: categoryScores.map((cat) => ({
       name: cat.label,
