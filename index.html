@@ -421,6 +421,19 @@
             gap: 18px;
         }
 
+        .score-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 800px) {
+            .score-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .panel {
             border: 1px solid var(--border);
             border-radius: 6px;
@@ -587,43 +600,45 @@
                     <div class="market-note">S&amp;P 500 market cap shown as SPY ETF proxy.</div>
                 </section>
                 
-                <!-- Market Climate -->
-                <section class="main-score">
-                    <div class="section-header">Market Climate</div>
-                    <div class="score-display">
-                        <span id="scoreValue" class="score-number">--</span>
-                        <span class="score-max">/100</span>
-                    </div>
-                    <div id="scoreLabel" class="score-label">--</div>
-                    <div id="mainBar" class="ascii-bar"></div>
-                    <div class="bar-labels">
-                        <span>Unfavorable</span>
-                        <span>Favorable</span>
-                    </div>
-                    <div class="dca-meta">
-                        <span id="scoreChange">--</span>
-                    </div>
-                </section>
+                <div class="score-grid">
+                    <!-- Market Climate -->
+                    <section class="main-score">
+                        <div class="section-header">Market Climate</div>
+                        <div class="score-display">
+                            <span id="scoreValue" class="score-number">--</span>
+                            <span class="score-max">/100</span>
+                        </div>
+                        <div id="scoreLabel" class="score-label">--</div>
+                        <div id="mainBar" class="ascii-bar"></div>
+                        <div class="bar-labels">
+                            <span>Unfavorable</span>
+                            <span>Favorable</span>
+                        </div>
+                        <div class="dca-meta">
+                            <span id="scoreChange">--</span>
+                        </div>
+                    </section>
 
-                <!-- DCA Readiness -->
-                <section class="dca-section">
-                    <div class="section-header">DCA Readiness</div>
-                    <div class="score-display">
-                        <span id="dcaOverall" class="score-number">--</span>
-                        <span class="score-max">/100</span>
-                    </div>
-                    <div id="dcaLabel" class="score-label">--</div>
-                    <div id="dcaBar" class="ascii-bar"></div>
-                    <div class="bar-labels">
-                        <span>Not Favorable</span>
-                        <span>Favorable</span>
-                    </div>
-                    <div id="dcaInvestmentIndicator" class="dca-meta">DCA Readiness — --</div>
-                    <div class="dca-badges">
-                        <span>DCA Stocks: <strong id="dcaStocks">--</strong></span>
-                        <span>DCA Crypto: <strong id="dcaCrypto">--</strong></span>
-                    </div>
-                </section>
+                    <!-- DCA Readiness -->
+                    <section class="dca-section">
+                        <div class="section-header">DCA Readiness</div>
+                        <div class="score-display">
+                            <span id="dcaOverall" class="score-number">--</span>
+                            <span class="score-max">/100</span>
+                        </div>
+                        <div id="dcaLabel" class="score-label">--</div>
+                        <div id="dcaBar" class="ascii-bar"></div>
+                        <div class="bar-labels">
+                            <span>Not Favorable</span>
+                            <span>Favorable</span>
+                        </div>
+                        <div id="dcaInvestmentIndicator" class="dca-meta">DCA Readiness — --</div>
+                        <div class="dca-badges">
+                            <span>DCA Stocks: <strong id="dcaStocks">--</strong></span>
+                            <span>DCA Crypto: <strong id="dcaCrypto">--</strong></span>
+                        </div>
+                    </section>
+                </div>
                 
                 <!-- Category Breakdown -->
                 <section class="categories">
