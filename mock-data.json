@@ -3,6 +3,11 @@
   "score": 54,
   "label": "Neutral",
   "change24h": 3.2,
+  "markets": {
+    "btc": { "price": 52340, "marketCap": 1034000000000 },
+    "gold": { "price": 2040, "marketCap": 12000000000000, "marketCapEstimate": true },
+    "sp500": { "price": 4920, "marketCap": 450000000000, "marketCapProxy": "SPY" }
+  },
   "dca": {
     "stocks": 62,
     "crypto": 48

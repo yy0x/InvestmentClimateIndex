@@ -372,6 +372,44 @@
             color: var(--text-primary);
         }
 
+        .markets {
+            margin-bottom: 32px;
+            border: 1px solid var(--border);
+            padding: 16px 18px;
+            border-radius: 6px;
+        }
+
+        .market-row {
+            display: grid;
+            grid-template-columns: 140px 1fr 1fr;
+            gap: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .market-row:last-child {
+            border-bottom: none;
+        }
+
+        .market-label {
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+        }
+
+        .market-value {
+            color: var(--text-primary);
+            text-align: right;
+        }
+
+        .market-note {
+            color: var(--text-muted);
+            font-size: 10px;
+            margin-top: 8px;
+        }
+
         /* Change indicators */
         .change {
             font-size: 11px;
@@ -419,6 +457,26 @@
                 <div id="statRefresh" class="stat-value">--</div>
                 <div class="stat-label">Refresh</div>
             </div>
+        </section>
+
+        <section class="markets">
+            <div class="section-header" style="margin-bottom: 12px;">Live Markets</div>
+            <div class="market-row">
+                <div class="market-label">BTC</div>
+                <div id="btcPrice" class="market-value">--</div>
+                <div id="btcMarketCap" class="market-value">--</div>
+            </div>
+            <div class="market-row">
+                <div class="market-label">Gold</div>
+                <div id="goldPrice" class="market-value">--</div>
+                <div id="goldMarketCap" class="market-value">--</div>
+            </div>
+            <div class="market-row">
+                <div class="market-label">S&amp;P 500</div>
+                <div id="spPrice" class="market-value">--</div>
+                <div id="spMarketCap" class="market-value">--</div>
+            </div>
+            <div class="market-note">S&amp;P 500 market cap shown as SPY ETF proxy.</div>
         </section>
 
         <!-- Regular Investor View -->
@@ -542,6 +600,30 @@
             return `<span class="filled">${'█'.repeat(filled)}</span><span class="empty">${'░'.repeat(empty)}</span>`;
         };
 
+        const formatCurrency = (value) => {
+            if (value == null) return '--';
+            return `$${Number(value).toLocaleString('en-US', { maximumFractionDigits: 2 })}`;
+        };
+
+        const formatMarketCap = (value, note) => {
+            if (value == null) return '--';
+            const num = Number(value);
+            let display = num;
+            let suffix = '';
+            if (num >= 1e12) {
+                display = num / 1e12;
+                suffix = 'T';
+            } else if (num >= 1e9) {
+                display = num / 1e9;
+                suffix = 'B';
+            } else if (num >= 1e6) {
+                display = num / 1e6;
+                suffix = 'M';
+            }
+            const formatted = `${display.toFixed(2)}${suffix}`;
+            return note ? `${formatted} ${note}` : formatted;
+        };
+
         const renderHeader = (data) => {
             const timestamp = document.getElementById('timestamp');
             const liveDot = document.getElementById('liveDot');
@@ -628,10 +710,30 @@
             document.getElementById('sourcesList').textContent = data.sources.join(' · ');
         };
 
+        const renderMarkets = (data) => {
+            if (!data.markets) return;
+            const btc = data.markets.btc || {};
+            const gold = data.markets.gold || {};
+            const sp = data.markets.sp500 || {};
+            document.getElementById('btcPrice').textContent = formatCurrency(btc.price);
+            document.getElementById('btcMarketCap').textContent = formatMarketCap(btc.marketCap);
+            document.getElementById('goldPrice').textContent = formatCurrency(gold.price);
+            document.getElementById('goldMarketCap').textContent = formatMarketCap(
+                gold.marketCap,
+                gold.marketCapEstimate ? 'est.' : ''
+            );
+            document.getElementById('spPrice').textContent = formatCurrency(sp.price);
+            document.getElementById('spMarketCap').textContent = formatMarketCap(
+                sp.marketCap,
+                sp.marketCapProxy ? `proxy (${sp.marketCapProxy})` : ''
+            );
+        };
+
         const renderAll = (data) => {
             renderHeader(data);
             renderRegular(data);
             renderDca(data);
+            renderMarkets(data);
             renderCategories(data);
             renderHistory(data);
             renderDcaHistory(data);
