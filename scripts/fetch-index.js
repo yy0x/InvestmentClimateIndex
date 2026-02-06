@@ -187,10 +187,7 @@ const fetchBtcMarket = async () => {
 };
 
 const fetchGoldMarket = async () => {
-  if (!CONFIG.goldApiKey) {
-    return { price: null, marketCap: null, marketCapEstimate: true };
-  }
-  const url = `https://app.goldapi.net/price/XAU/USD?x-api-key=${CONFIG.goldApiKey}`;
+  const url = 'https://api.gold-api.com/price/XAU';
   const data = await fetchJson(url);
   return {
     price: data.price || null,
@@ -225,7 +222,7 @@ const fetchSp500Market = async () => {
     spyMarketCap = null;
   }
   return {
-    price: spxPrice || spyPrice,
+    price: spxPrice,
     marketCap: spyMarketCap,
     marketCapProxy: 'SPY'
   };

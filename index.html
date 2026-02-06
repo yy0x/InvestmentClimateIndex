@@ -542,7 +542,7 @@
 
         <div class="layout">
             <main class="main-content">
-                <!-- Top Stats -->
+<!-- Top Stats -->
                 <section class="stats" style="padding-top: 0; border-top: 0; margin-bottom: 32px;">
                     <div class="stat">
                         <div class="stat-value"><a id="statArticles" href="#news" style="color: inherit; text-decoration: none;">--</a></div>
@@ -561,7 +561,32 @@
                         <div class="stat-label">Refresh</div>
                     </div>
                 </section>
-
+<!-- Live Markets -->
+                <section class="markets">
+                    <div class="section-header" style="margin-bottom: 12px;">Live Markets</div>
+                    <div class="market-row" style="padding-top: 0; color: var(--text-muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em;">
+                        <div class="market-label">Asset</div>
+                        <div class="market-value">Price</div>
+                        <div class="market-value">MCap</div>
+                    </div>
+                    <div class="market-row">
+                        <div class="market-label">BTC</div>
+                        <div id="btcPrice" class="market-value">--</div>
+                        <div id="btcMarketCap" class="market-value">--</div>
+                    </div>
+                    <div class="market-row">
+                        <div class="market-label">Gold</div>
+                        <div id="goldPrice" class="market-value">--</div>
+                        <div id="goldMarketCap" class="market-value">--</div>
+                    </div>
+                    <div class="market-row">
+                        <div class="market-label">S&amp;P 500</div>
+                        <div id="spPrice" class="market-value">--</div>
+                        <div id="spMarketCap" class="market-value">--</div>
+                    </div>
+                    <div class="market-note">S&amp;P 500 market cap shown as SPY ETF proxy.</div>
+                </section>
+                
                 <!-- Market Climate -->
                 <section class="main-score">
                     <div class="section-header">Market Climate</div>
@@ -599,32 +624,7 @@
                         <span>DCA Crypto: <strong id="dcaCrypto">--</strong></span>
                     </div>
                 </section>
-                <!-- Live Markets -->
-                <section class="markets">
-                    <div class="section-header" style="margin-bottom: 12px;">Live Markets</div>
-                    <div class="market-row" style="padding-top: 0; color: var(--text-muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em;">
-                        <div class="market-label">Asset</div>
-                        <div class="market-value">Price</div>
-                        <div class="market-value">MCap</div>
-                    </div>
-                    <div class="market-row">
-                        <div class="market-label">BTC</div>
-                        <div id="btcPrice" class="market-value">--</div>
-                        <div id="btcMarketCap" class="market-value">--</div>
-                    </div>
-                    <div class="market-row">
-                        <div class="market-label">Gold</div>
-                        <div id="goldPrice" class="market-value">--</div>
-                        <div id="goldMarketCap" class="market-value">--</div>
-                    </div>
-                    <div class="market-row">
-                        <div class="market-label">S&amp;P 500</div>
-                        <div id="spPrice" class="market-value">--</div>
-                        <div id="spMarketCap" class="market-value">--</div>
-                    </div>
-                    <div class="market-note">S&amp;P 500 market cap shown as SPY ETF proxy.</div>
-                </section>
-
+                
                 <!-- Category Breakdown -->
                 <section class="categories">
                     <div class="section-header">Category Breakdown</div>
