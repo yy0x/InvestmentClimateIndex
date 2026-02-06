@@ -569,6 +569,29 @@
             color: var(--text-secondary);
         }
 
+        .quick-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .quick-link {
+            border: 1px solid var(--border);
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        .quick-link:hover {
+            color: var(--text-primary);
+            border-color: var(--text-muted);
+        }
+
         .signal-badge {
             font-size: 12px;
             font-weight: 700;
@@ -658,6 +681,15 @@
                         <div id="heroSignalBadge" class="signal-badge">--</div>
                     </div>
                 </section>
+
+                <div class="quick-links">
+                    <a class="quick-link" href="daily.html">Daily Digest</a>
+                    <a class="quick-link" href="category.html?c=macro">Macro</a>
+                    <a class="quick-link" href="category.html?c=micro">Micro</a>
+                    <a class="quick-link" href="category.html?c=stocks">Stocks</a>
+                    <a class="quick-link" href="category.html?c=crypto">Crypto</a>
+                    <a class="quick-link" href="category.html?c=political">Political</a>
+                </div>
 
                 <!-- Live Markets -->
                 <section class="markets">
