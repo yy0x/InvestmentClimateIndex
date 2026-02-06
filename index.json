@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-02-06T16:28:51.411Z",
+  "updatedAt": "2026-02-06T16:47:15.204Z",
   "score": 49,
   "label": null,
   "change24h": 0,
   "markets": {
     "btc": {
-      "price": 69531,
-      "marketCap": 1391783738017.8633
+      "price": 69764,
+      "marketCap": 1394200259932.4614
     },
     "gold": {
       "price": null,
@@ -14,7 +14,7 @@
       "marketCapEstimate": true
     },
     "sp500": {
-      "price": 686.76,
+      "price": 687.77,
       "marketCap": null,
       "marketCapProxy": "SPY"
     }
@@ -70,14 +70,32 @@
   ],
   "drivers": {
     "positive": [
-      "Why Alphabet’s stock is falling despite booming cloud growth",
-      "Boeing to cut around 300 defence division supply chain jobs",
-      "Goldman Sachs bucks Warsh Fed rate cut worry - thestreet.com"
+      {
+        "title": "Why Alphabet’s stock is falling despite booming cloud growth",
+        "url": "https://www.marketwatch.com/story/why-alphabets-stock-is-falling-despite-booming-cloud-growth-2ec59941"
+      },
+      {
+        "title": "Boeing to cut around 300 defence division supply chain jobs",
+        "url": "https://www.bloomberg.com/news/articles/2026-02-04/boeing-to-cut-around-300-defense-division-supply-chain-jobs"
+      },
+      {
+        "title": "Goldman Sachs bucks Warsh Fed rate cut worry - thestreet.com",
+        "url": "https://www.thestreet.com/fed/goldman-sachs-resets-fed-rate-cut-outlook-under-warsh"
+      }
     ],
     "negative": [
-      "Qualcomm’s stock falls as memory constraints hit outlook",
-      "Silver falls as much as 13% as the volatility continues in metals",
-      "Corporate DEI index sees 65% drop in participation from Fortune 500 companies"
+      {
+        "title": "Qualcomm’s stock falls as memory constraints hit outlook",
+        "url": "https://www.marketwatch.com/story/qualcomms-stock-falls-as-memory-constraints-hit-outlook-844badba"
+      },
+      {
+        "title": "Silver falls as much as 13% as the volatility continues in metals",
+        "url": "https://www.marketwatch.com/story/silver-falls-as-much-as-13-as-the-volatility-continues-in-metals-c5285ba7"
+      },
+      {
+        "title": "Corporate DEI index sees 65% drop in participation from Fortune 500 companies",
+        "url": "https://www.cnbc.com/2026/02/04/corporate-dei-index-hrc.html"
+      }
     ]
   },
   "stats": {
