@@ -186,6 +186,13 @@ const fetchBtcMarket = async () => {
   };
 };
 
+const fetchBtc7dChange = async () => {
+  const url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin&price_change_percentage=7d';
+  const data = await fetchJson(url);
+  const item = Array.isArray(data) ? data[0] : null;
+  return item ? item.price_change_percentage_7d_in_currency || 0 : 0;
+};
+
 const GOLD_TROY_OZ_PER_TONNE = 32150.7466;
 const GOLD_FALLBACK_TONNES = 216265;
 
@@ -212,6 +219,23 @@ const fetchGoldMarket = async () => {
     marketCap: price ? price * tonnes * GOLD_TROY_OZ_PER_TONNE : null,
     marketCapEstimate: true
   };
+};
+
+const fetchSpx7dChange = async () => {
+  try {
+    const csv = await fetch('https://stooq.com/q/l/?s=^spx&f=sd2t2ohlcv&h&e=csv').then((res) => res.text());
+    const lines = csv.trim().split('\n');
+    if (lines.length >= 8) {
+      const latest = Number(lines[1].split(',')[6]);
+      const weekAgo = Number(lines[7].split(',')[6]);
+      if (Number.isFinite(latest) && Number.isFinite(weekAgo) && weekAgo > 0) {
+        return ((latest / weekAgo) - 1) * 100;
+      }
+    }
+  } catch (err) {
+    return 0;
+  }
+  return 0;
 };
 
 const fetchSp500Market = async () => {
@@ -281,7 +305,7 @@ const normalize = (items) => {
   });
 };
 
-const aggregateScores = (items) => {
+const aggregateScores = (items, dipBonuses = { stocks: 0, crypto: 0 }) => {
   const categoryBuckets = {
     macro: [],
     micro: [],
@@ -337,8 +361,8 @@ const aggregateScores = (items) => {
     categoryScores,
     sentimentScore: Math.round(overallScore),
     dca: {
-      stocks: clamp(stocksDca, 0, 100),
-      crypto: clamp(cryptoDca, 0, 100)
+      stocks: clamp(stocksDca + dipBonuses.stocks, 0, 100),
+      crypto: clamp(cryptoDca + dipBonuses.crypto, 0, 100)
     }
   };
 };
@@ -366,17 +390,28 @@ const updateDcaHistory = (history, dca) => {
 };
 
 const main = async () => {
-  const [crypto, finnhub, news, btc, gold, sp500] = await Promise.all([
+  const [crypto, finnhub, news, btc, gold, sp500, btc7d, spx7d] = await Promise.all([
     fetchCryptoPanic().catch(() => []),
     fetchFinnhub().catch(() => []),
     fetchNewsApi().catch(() => []),
     fetchBtcMarket().catch(() => ({ price: null, marketCap: null })),
     fetchGoldMarket().catch(() => ({ price: null, marketCap: null, marketCapEstimate: true })),
-    fetchSp500Market().catch(() => ({ price: null, marketCap: null, marketCapProxy: 'SPY' }))
+    fetchSp500Market().catch(() => ({ price: null, marketCap: null, marketCapProxy: 'SPY' })),
+    fetchBtc7dChange().catch(() => 0),
+    fetchSpx7dChange().catch(() => 0)
   ]);
 
   const items = normalize([...crypto, ...finnhub, ...news]);
-  const { categoryScores, sentimentScore, dca } = aggregateScores(items);
+  const dipBonus = (change) => {
+    if (change >= 0) return 0;
+    const bonus = Math.min(10, Math.abs(change) * 0.5);
+    return Math.round(bonus);
+  };
+  const dipBonuses = {
+    crypto: dipBonus(btc7d),
+    stocks: dipBonus(spx7d)
+  };
+  const { categoryScores, sentimentScore, dca } = aggregateScores(items, dipBonuses);
 
   const existing = fs.existsSync(OUTPUT_PATH)
     ? JSON.parse(fs.readFileSync(OUTPUT_PATH, 'utf8'))
